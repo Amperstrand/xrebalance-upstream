@@ -112,6 +112,13 @@ impl Coalescer {
     }
 
     /// Cache entry count, for stats.
+    /// Drop all remembered observations: the authoritative store they
+    /// mirror (the persistent layer) is gone, so "already informed"
+    /// is no longer true for any key.
+    pub fn clear(&mut self) {
+        self.cache.clear();
+    }
+
     pub fn len(&self) -> usize {
         self.cache.len()
     }
