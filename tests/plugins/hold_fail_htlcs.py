@@ -15,7 +15,9 @@ held = []
 
 def on_htlc_accepted(onion, htlc, request, plugin, **kwargs):
     held.append(request)
-    plugin.log("holding htlc %s" % htlc["payment_hash"])
+    plugin.log("holding htlc %s in=%smsat onion_next=%s" % (
+        htlc["payment_hash"], htlc.get("amount_msat"),
+        (onion or {}).get("short_channel_id")))
 
 
 plugin.add_hook("htlc_accepted", on_htlc_accepted, background=True)

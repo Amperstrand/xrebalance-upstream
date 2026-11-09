@@ -867,6 +867,11 @@ pub async fn execute(
             .iter()
             .map(|h| hop_to_sendpay(h, &plan.onion_scids))
             .collect::<Result<Vec<_>, _>>()?;
+        log::debug!(
+            "req {}: DIAG part route: {:?}",
+            params.label.as_deref().unwrap_or("?"),
+            sp_route
+        );
         let first = &path[0];
         let last = &path[path.len() - 1];
         let planned_msat = last["amount_out_msat"].as_u64().unwrap_or(0);
